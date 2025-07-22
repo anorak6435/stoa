@@ -286,6 +286,12 @@ class PageBuilder {
 </html>";
     }
 
+    function updatepost_page() {
+        return "<!DOCTYPE html>
+<html lang=\"en\">" . $this->head() . "<body>" . $this->navbar() . $this->update_post_form() . $this->footer() . "</body>
+</html>";
+    }
+
     function login_page() {
         return "<!DOCTYPE html>
 <html lang=\"en\">" . $this->head() . "<body>" . $this->navbar() . $this->login_form() . $this->footer() . "</body>
@@ -368,6 +374,25 @@ class PageBuilder {
         </form>";
     }
 
+    function update_post_form() {
+        $result = query("SELECT * FROM categories");
+        $options_html = "";
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $options_html = $options_html . "<option value=\"{$row['name']}\">{$row['name']}</option>";
+        }
+
+
+        return "<form action=\"updatepost.php\" method=\"POST\" enctype=\"multipart/form-data\">
+            <input type=\"text\" name=\"title\" placeholder=\"Add your Post title\" required>
+            <textarea name=\"content\" placeholder=\"Add your Post content here\" required></textarea>
+            <select name=\"category\" id=\"category\">" . $options_html . "
+            </select>
+            <input type=\"file\" name=\"image\">
+            <input type=\"submit\" name=\"submit\" value=\"Update Post\">
+        </form>";
+    }
+
     function displayPost($post) {
         return "<div class=\"post\"><h2>" . $post['title'] . "</h2>
     <p>" . $post['content'] . "</p>
@@ -418,6 +443,9 @@ class PageBuilder {
                 break;
             case "insertpost":
                 return $this->insertpost_page();
+                break;
+            case "updatepost":
+                return $this->updatepost_page();
                 break;
             default:
                 return $this->defaulting($name);
