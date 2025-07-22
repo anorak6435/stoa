@@ -1,3 +1,23 @@
-# Philosophy discussion platform
+# Blog platform
 
 inspiration: https://www.youtube.com/watch?v=lh7EBoiRRfQ
+
+## Requirements
+- XAMPP server
+
+## Quick start (Part 1)
+clone the repository into the xampp server htdocs folder.
+
+### If using MYSQL as database
+from sql folder take stoa.sql and import it into phpmyadmin
+
+### ELSE IF using Wordpress api
+BUILDING...
+
+## Quick Start (Part 2)
+
+goto: http://localhost/stoa
+
+Don't worry about passwords. Not verifying those ;)
+
+enjoy!
