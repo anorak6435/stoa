@@ -12,7 +12,7 @@ clone the repository into the xampp server htdocs folder.
 from sql folder take stoa.sql and import it into phpmyadmin
 
 ### ELSE IF using Wordpress api
-BUILDING...
+showing usage of wordpress api in api_test.php
 
 ## Quick Start (Part 2)
 
