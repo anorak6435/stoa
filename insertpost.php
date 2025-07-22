@@ -1,9 +1,9 @@
 <?php
 session_start();
 $user_id = $_SESSION['user_id'];
-include "db.php";
+include_once "db.php";
 if (!isset($_SESSION['user_id'])) {
-    header("Location: Login.php");
+    header("Location: index.php");
 } else {
     if ($_SESSION['user_role'] == 'author') {
         $sql = "SELECT * FROM categories";
@@ -42,12 +42,18 @@ if (!isset($_SESSION['user_id'])) {
             }
         }
     } else {
-        header("Location: dashboard.php");
+        header("Location: index.php");
     }
 }
+
+include "pagebuilder.php";
+$pb = new PageBuilder();
+
+echo $pb->page('insertpost');
+
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -68,4 +74,4 @@ if (!isset($_SESSION['user_id'])) {
         <input type="submit" name="submit" value="Add Post">
     </form>
 </body>
-</html>
+</html> -->

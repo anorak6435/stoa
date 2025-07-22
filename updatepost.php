@@ -48,7 +48,7 @@ if (!isset($_SESSION['user_id'])) {
             }
         }
     } else {
-        header("Location: dashboard.php");
+        header("Location: index.php");
     }
 }
 ?>

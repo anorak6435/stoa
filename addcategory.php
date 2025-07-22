@@ -19,7 +19,7 @@ if (!isset($_SESSION["user_id"])) {
             }
         }
     } else {
-        header("Location: dashboard.php"); // redirect
+        header("Location: index.php"); // redirect
         
     }
 }
@@ -36,7 +36,7 @@ if (!isset($_SESSION["user_id"])) {
     <form action="addcategory.php" method="POST">
         <input type="text" name="name">
         <input type="submit" name="submit" value="Add category">
-        <a href='dashboard.php'>Dashboard</a>
+        <a href='index.php'>Index</a>
     </form>
 </body>
 </html>

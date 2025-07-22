@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
 } else {
     if ($_SESSION['user_role'] == "subscriber") {
-        header("Location: dashboard.php");
+        header("Location: index.php");
     } else {
         $post_id = $_GET['post_id'];
         $sql = "DELETE from posts WHERE id = '$post_id'";
