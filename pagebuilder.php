@@ -8,203 +8,13 @@ class PageBuilder {
     }
 
     function head_styling() {
-        return "<style>
-    body {
-        background-color: #f8f9fa;
-    }
-
-    .container {
-        margin: 0 auto;
-        max-width: 1200px;
-        padding: 40px;
-        border: 1px solid #ddd;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    h1 {
-        font-size: 36px;
-        margin: 20px 0;
-        color: #2e587b;
-    }
-
-    p {
-        font-size: 20px;
-        margin: 20px 0;
-        color: #4f4f4f;
-    }
-
-    .blog-posts {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 1rem;
-        background-color: #2e587b;
-        color: #fff;
-    }
-
-    .post {
-        margin: 1rem;
-        padding: 0.5rem;
-        width: 100%;
-        border: 1px solid #ddd;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .link {
-        display: block;
-        margin: 0 1rem;
-        padding: 1rem;
-        border: 1px solid #ff914d;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        color: #fff;
-        float: right;
-    }
-
-    .link:hover {
-        text-decoration-line: none;
-        border: 1px solid #515151;
-        color: #ff914d;
-    }
-
-    .post h2 {
-        font-size: 24px;
-        margin: 20px 0;
-        color: #fff;
-    }
-
-    .post p {
-        font-size: 18px;
-        margin: 20px 0;
-        color: #fff;
-    }
-
-    img {
-        display: block;
-        margin: auto;
-    }
-
-    nav {
-        color: #fff;
-        background-color: #2e587b;
-        margin: 0 0 2rem 0;
-    }
-
-    nav ul {
-        list-style: none;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    nav a {
-        color: #fff;
-        text-decoration: none;
-        padding: 1rem;
-        margin: 0.5rem;
-    }
-
-    nav a:hover {
-        color: #ff914d;
-    }
-
-    nav li {
-        padding: 2rem;
-    }
-
-    nav li a i {
-        font-size: 24px;
-        margin-right: 10px;
-    }
-
-    form {
-        color: #000;
-        width: 80%;
-        margin: 2rem auto;
-        padding: 1rem;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    input[type=\"text\"],
-    textarea {
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    input[type=\"password\"],
-    textarea {
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    select {
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    input[type=\"file\"] {
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    input[type=\"submit\"] {
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        background-color: #2e587b;
-        color: #fff;
+        return file_get_contents("page_parts/style.html");
         }
-        
-    input[type=\"submit\"]:hover {
-        color: #ff914d;
-    }
-
-    footer {
-        background-color: #2e587b;
-        padding: 1rem;
-        margin: 2rem 0 0 0;
-    }
-
-    footer p {
-        color: #fff;
-        font-size: 16px;
-        text-align: center;
-    }
-        </style>";
-        }
-            
-            
     function head() {
-        return "<head>
-        <meta charset=\"UTF-8\">
-        <title>Blog</title>
-        <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">
-        <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js\"></script>
-        <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>
-        " . $this->head_styling() . "</head>";
+        return implode("", array("<head>",
+        file_get_contents("page_parts/head.html"),
+        $this->head_styling(),
+        "</head>"));
     }
 
     function blog_general() {
@@ -257,45 +67,45 @@ class PageBuilder {
     }
 
     function index_page() {
-        return "<!DOCTYPE html>
-<html lang=\"en\">" . $this->head() . "<body>" . $this->navbar() . $this->blog_general() . $this->blogposts() . $this->footer() . "</body>
-</html>";
+        return implode("", array("<!DOCTYPE html>
+<html lang=\"en\">", $this->head(), "<body>", $this->navbar(), $this->blog_general(), $this->blogposts(), $this->footer(), "</body>
+</html>"));
     }
 
-    function defaulting($page_name) {
-        return "<!DOCTYPE html>
-<html lang=\"en\">" . $this->head() . "<body>" . $this->navbar() . "<h2>404 Hello I could not find the page you where looking for. '$page_name'</h2>" . $this->footer() . "</body>
-</html>";
+    function page404($page_name) {
+        return implode("", array("<!DOCTYPE html>
+<html lang=\"en\">" , $this->head() , "<body>" , $this->navbar() , "<h2>404 Hello I could not find the page you where looking for. '$page_name'</h2>" , $this->footer() , "</body>
+</html>"));
     }
     
     function posts_page() {
-        return "<!DOCTYPE html>
-<html lang=\"en\">" . $this->head() . "<body>" . $this->navbar() . $this->blogposts() . $this->footer() . "</body>
-</html>";
+        return implode("", array("<!DOCTYPE html>
+<html lang=\"en\">" , $this->head() , "<body>" , $this->navbar() , $this->blogposts() , $this->footer() , "</body>
+</html>"));
     }
 
     function register_page() {
-        return "<!DOCTYPE html>
-<html lang=\"en\">" . $this->head() . "<body>" . $this->navbar() . $this->register_form() . $this->footer() . "</body>
-</html>";
+        return implode("", array("<!DOCTYPE html>
+<html lang=\"en\">" , $this->head() , "<body>" , $this->navbar() , $this->register_form() , $this->footer() , "</body>
+</html>"));
     }
     
     function insertpost_page() {
-        return "<!DOCTYPE html>
-<html lang=\"en\">" . $this->head() . "<body>" . $this->navbar() . $this->new_post_form() . $this->footer() . "</body>
-</html>";
+        return implode("", array("<!DOCTYPE html>
+<html lang=\"en\">" , $this->head() , "<body>" , $this->navbar() , $this->new_post_form() , $this->footer() , "</body>
+</html>"));
     }
 
     function updatepost_page() {
-        return "<!DOCTYPE html>
-<html lang=\"en\">" . $this->head() . "<body>" . $this->navbar() . $this->update_post_form() . $this->footer() . "</body>
-</html>";
+        return implode("", array("<!DOCTYPE html>
+<html lang=\"en\">" , $this->head() , "<body>" , $this->navbar() , $this->update_post_form() , $this->footer() , "</body>
+</html>"));
     }
 
     function login_page() {
-        return "<!DOCTYPE html>
-<html lang=\"en\">" . $this->head() . "<body>" . $this->navbar() . $this->login_form() . $this->footer() . "</body>
-</html>";
+        return implode("", array("<!DOCTYPE html>
+<html lang=\"en\">" , $this->head() , "<body>" , $this->navbar() , $this->login_form() , $this->footer() , "</body>
+</html>"));
     }
 
     function footer() {
@@ -305,57 +115,25 @@ class PageBuilder {
     }
 
     function login_form() {
-        return "<form action=\"login.php\" method=\"POST\">
-        <div class=\"container\">
-            <h1>Login</h1>
-            <p>Get back to posting.</p>
-            <hr>
-
-            <label for=\"name\"><b>Name</b></label>
-            <input type=\"text\" placeholder=\"Enter name\" name=\"name\" id=\"name\" required>
-
-            <label for=\"psw\"><b>Password</b></label>
-            <input type=\"password\" placeholder=\"Enter Password\" name=\"psw\" id=\"psw\" required>
-            <hr>
-
-            <button type=\"submit\" name=\"submit\" class=\"loginbtn\">Login</button>
-            </div>
-
-            <div class=\"container signin\">
-            <p>No account yet? <a href=\"register.php\">Register here</a>.</p>
-        </div>
-    </form>";
+        return file_get_contents("page_parts/loginform.html");
     }
 
     function register_form() {
-        return "<form action=\"register.php\" method=\"POST\">
-        <div class=\"container\">
-            <h1>Register</h1>
-            <p>Please fill in this form to create an account.</p>
-            <hr>
-
-            <label for=\"name\"><b>Name</b></label>
-            <input type=\"text\" placeholder=\"Enter name\" name=\"name\" id=\"name\" required>
-
-            <label for=\"psw\"><b>Password</b></label>
-            <input type=\"password\" placeholder=\"Enter Password\" name=\"psw\" id=\"psw\" required>
-
-            <select name=\"role\">
-                <option value=\"subscriber\">Subscriber</option>
-                <option value=\"author\">Author</option>
-            </select>
-            <hr>
-
-            <button type=\"submit\" name=\"submit\" class=\"registerbtn\">Register</button>
-            </div>
-
-            <div class=\"container signin\">
-            <p>Already have an account? <a href=\"login.php\">Sign in</a>.</p>
-        </div>
-    </form>";
+        return file_get_contents("page_parts/registerform.html");;
     }
 
     function new_post_form() {
+
+        return implode("", array("<form action=\"insertpost.php\" method=\"POST\" enctype=\"multipart/form-data\">
+            <input type=\"text\" name=\"title\" placeholder=\"Add your Post title\" required>
+            <textarea name=\"content\" placeholder=\"Add your Post content here\" required></textarea>"
+            , $this->post_category_selection() ,
+            "<input type=\"file\" name=\"image\">
+            <input type=\"submit\" name=\"submit\" value=\"Add Post\">
+        </form>"));
+    }
+
+    function post_category_selection() {
         $result = query("SELECT * FROM categories");
         $options_html = "";
 
@@ -363,15 +141,8 @@ class PageBuilder {
             $options_html = $options_html . "<option value=\"{$row['name']}\">{$row['name']}</option>";
         }
 
-
-        return "<form action=\"insertpost.php\" method=\"POST\" enctype=\"multipart/form-data\">
-            <input type=\"text\" name=\"title\" placeholder=\"Add your Post title\" required>
-            <textarea name=\"content\" placeholder=\"Add your Post content here\" required></textarea>
-            <select name=\"category\" id=\"category\">" . $options_html . "
-            </select>
-            <input type=\"file\" name=\"image\">
-            <input type=\"submit\" name=\"submit\" value=\"Add Post\">
-        </form>";
+        return "<select name=\"category\" id=\"category\">" . $options_html . "
+            </select>";
     }
 
     function update_post_form() {
@@ -386,8 +157,7 @@ class PageBuilder {
         return "<form action=\"updatepost.php\" method=\"POST\" enctype=\"multipart/form-data\">
             <input type=\"text\" name=\"title\" placeholder=\"Add your Post title\" required>
             <textarea name=\"content\" placeholder=\"Add your Post content here\" required></textarea>
-            <select name=\"category\" id=\"category\">" . $options_html . "
-            </select>
+            " . $this->post_category_selection() . "
             <input type=\"file\" name=\"image\">
             <input type=\"submit\" name=\"submit\" value=\"Update Post\">
         </form>";
@@ -448,7 +218,7 @@ class PageBuilder {
                 return $this->updatepost_page();
                 break;
             default:
-                return $this->defaulting($name);
+                return $this->page404($name);
         }
     }
 }
