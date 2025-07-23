@@ -3,8 +3,9 @@ include_once "db.php";
 
 
 class PageBuilder {
+    private $data_handler;
     function __construct() {
-
+        $this->data_handler = new StoaWordpressHandler();
     }
 
     function head_styling() {
@@ -134,10 +135,10 @@ class PageBuilder {
     }
 
     function post_category_selection() {
-        $result = query("SELECT * FROM categories");
+        $categories = $this->data_handler->load_categories();
         $options_html = "";
 
-        while ($row = mysqli_fetch_assoc($result)) {
+        foreach($categories as $row) {
             $options_html = $options_html . "<option value=\"{$row['name']}\">{$row['name']}</option>";
         }
 
@@ -146,12 +147,6 @@ class PageBuilder {
     }
 
     function update_post_form() {
-        $result = query("SELECT * FROM categories");
-        $options_html = "";
-
-        while ($row = mysqli_fetch_assoc($result)) {
-            $options_html = $options_html . "<option value=\"{$row['name']}\">{$row['name']}</option>";
-        }
 
 
         return "<form action=\"updatepost.php\" method=\"POST\" enctype=\"multipart/form-data\">
@@ -164,9 +159,9 @@ class PageBuilder {
     }
 
     function displayPost($post) {
+        // echo var_dump($post);
         return "<div class=\"post\"><h2>" . $post['title'] . "</h2>
-    <p>" . $post['content'] . "</p>
-    <img src=\"images/" . $post['image'] . "\"/>" . $this->author_edit_post_controls($post) . "</div>";
+    <p>" . $post['content'] . "</p>". $this->author_edit_post_controls($post) . "</div>";
     }
 
     function author_edit_post_controls($post) {
@@ -188,9 +183,10 @@ class PageBuilder {
             // no user is logged-in no controlls should be given
             return "<div class=\"blog-posts container\"> <div class=\"container\"><h2>Posts</h2>The posts are only available to logged in users.</div></div>";
         } else {
-            $posts = query("SELECT * FROM posts");
+            $posts = $this->data_handler->load_posts();
             $post_html = "";
-            while ($post = mysqli_fetch_assoc($posts)) {
+
+            foreach($posts as $post) {
                 $post_html = $post_html . $this->displayPost($post);
             }
             return "<div class=\"blog-posts container\"> <div class=\"container\"><h2>Posts</h2></div>" . $post_html . "</div>";
